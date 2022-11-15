@@ -1,10 +1,13 @@
-const socket = io()
-let name;
+const socket = io();
+var datetime = new Date();
+
+var name;
 let textarea = document.querySelector('#textarea')
 let messageArea = document.querySelector('.message__area')
 do {
     name = prompt('Please enter your name: ')
-} while(!name)
+} 
+while(!name)
 
 textarea.addEventListener('keyup', (e) => {
     if(e.key === 'Enter') {
@@ -16,6 +19,7 @@ function sendMessage(message) {
     let msg = {
         user: name,
         message: message.trim()
+        
     }
     // Append 
     appendMessage(msg, 'outgoing')
@@ -34,7 +38,8 @@ function appendMessage(msg, type) {
 
     let markup = `
         <h4>${msg.user}</h4>
-        <p>${msg.message}</p>
+        <p style="font-size:18px;">${msg.message}</p>
+        <p style="padding-top:10px;font-size:12px;">${datetime}</p>
     `
     mainDiv.innerHTML = markup
     messageArea.appendChild(mainDiv)
@@ -49,5 +54,6 @@ socket.on('message', (msg) => {
 function scrollToBottom() {
     messageArea.scrollTop = messageArea.scrollHeight
 }
+
 
 
